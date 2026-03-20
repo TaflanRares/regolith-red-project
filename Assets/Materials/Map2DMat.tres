@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dpdbe02k6lcm8"]
+
+[ext_resource type="Shader" uid="uid://b3jumxcitwb04" path="res://Scripts/Shaders/Map2D_shader.gdshader" id="1_jri20"]
+[ext_resource type="Texture2D" uid="uid://b5aly3m4f0tm0" path="res://Assets/Textures/Mars/Mars_terrain_terraformed.bmp" id="2_6flb3"]
+
+[resource]
+shader = ExtResource("1_jri20")
+shader_parameter/terrain_image = ExtResource("2_6flb3")

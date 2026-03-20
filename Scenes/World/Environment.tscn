@@ -1,0 +1,26 @@
+[gd_scene load_steps=9 format=3 uid="uid://cncdbq72u50j3"]
+
+[ext_resource type="Material" uid="uid://6fu25xe687ji" path="res://Assets/Materials/Space_mat.material" id="1_6ttxw"]
+[ext_resource type="AudioStream" uid="uid://ctrsc7qhdv1yu" path="res://Assets/Music/ClairDeLune.WAV" id="2_ig408"]
+[ext_resource type="Script" uid="uid://pmypfsgixqt0" path="res://Scripts/GDScript/music-player.gd" id="2_shyp7"]
+[ext_resource type="AudioStream" uid="uid://ddsamsxbhxc5t" path="res://Assets/Music/HillsOfManchuria.WAV" id="3_8i6p3"]
+[ext_resource type="AudioStream" uid="uid://c1flsnf3ellyf" path="res://Assets/Music/SwanLake.WAV" id="5_8i6p3"]
+[ext_resource type="AudioStream" uid="uid://rik7n6tk1usf" path="res://Assets/Music/Standchen.WAV" id="5_dda7m"]
+
+[sub_resource type="Sky" id="Sky_auuc3"]
+sky_material = ExtResource("1_6ttxw")
+
+[sub_resource type="Environment" id="Environment_8s8ml"]
+background_mode = 2
+sky = SubResource("Sky_auuc3")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Environment" type="Node3D"]
+
+[node name="SpaceSky_Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8s8ml")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("2_shyp7")
+songs = Array[AudioStream]([ExtResource("3_8i6p3"), ExtResource("5_8i6p3"), ExtResource("5_dda7m"), ExtResource("2_ig408")])

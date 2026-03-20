@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://k3y73rql2u6e"]
+
+[ext_resource type="Script" uid="uid://lgmqlkuewowp" path="res://Scripts/Player/player.gd" id="1_tksy4"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_qf1b4"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_dkpv5"]
+[ext_resource type="Script" uid="uid://dr0wqty80sjn7" path="res://Scripts/Player/player-input.gd" id="3_g8e4n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mtuoh"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("input")]
+script = ExtResource("1_tksy4")
+input = NodePath("Input")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_mtuoh")
+disabled = true
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="CameraRot" type="Node3D" parent="CameraPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraRot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+keep_aspect = 0
+fov = 80.0
+
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("CameraPivot", "CameraRot", "PlayerCamera")]
+script = ExtResource("3_g8e4n")
+CameraPivot = NodePath("../CameraPivot")
+CameraRot = NodePath("../CameraPivot/CameraRot")
+PlayerCamera = NodePath("../CameraPivot/CameraRot/Camera3D")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_qf1b4")
+root = NodePath("..")
+state_properties = Array[String]([":position"])
+input_properties = Array[String](["Input:movement"])
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_dkpv5")
+root = NodePath("..")
+properties = Array[String]([":position"])
+
+[node name="PlayerUI" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="PlayerUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -173.0
+offset_top = -159.0
+offset_right = -25.0
+offset_bottom = -21.0
+grow_horizontal = 0
+grow_vertical = 0
+action_mode = 0
+text = "NEXT
+TURN"
+
+[connection signal="pressed" from="PlayerUI/Button" to="Input" method="_on_turn_end_button_pressed"]

@@ -1,0 +1,281 @@
+[gd_scene load_steps=6 format=3 uid="uid://badtpsxn5lago"]
+
+[ext_resource type="Script" uid="uid://c4smm8wlkhagj" path="res://Scripts/Multiplayer/lan-bootstrapper.gd" id="1_dy86e"]
+[ext_resource type="Script" uid="uid://78xrao23vdui" path="res://Scripts/UI/settings.gd" id="1_kqnwt"]
+[ext_resource type="Script" uid="uid://dbib5njqdsuc2" path="res://Scripts/Multiplayer/noray-bootstrapper.gd" id="2_fgck5"]
+[ext_resource type="FontFile" uid="uid://clnvkt2i0agmn" path="res://Assets/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="4_2pdmx"]
+
+[sub_resource type="Theme" id="Theme_36fxp"]
+default_font = ExtResource("4_2pdmx")
+default_font_size = 100
+
+[node name="Network Popup" type="TabContainer"]
+custom_minimum_size = Vector2(360, 240)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -88.0
+offset_right = 180.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+current_tab = 2
+
+[node name="LAN" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Address Row" type="HBoxContainer" parent="LAN"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="Address Label" type="Label" parent="LAN/Address Row"]
+layout_mode = 2
+text = "Address:"
+
+[node name="Address LineEdit" type="LineEdit" parent="LAN/Address Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "localhost"
+
+[node name="Port Label" type="Label" parent="LAN/Address Row"]
+layout_mode = 2
+text = "Port:"
+
+[node name="Port LineEdit" type="LineEdit" parent="LAN/Address Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "16384"
+
+[node name="Actions Row" type="HBoxContainer" parent="LAN"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Host Button" type="Button" parent="LAN/Actions Row"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Host"
+
+[node name="Join Button" type="Button" parent="LAN/Actions Row"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Join"
+
+[node name="Noray" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Noray Address Row" type="HBoxContainer" parent="Noray"]
+layout_mode = 2
+
+[node name="Address Label" type="Label" parent="Noray/Noray Address Row"]
+layout_mode = 2
+text = "noray host:"
+
+[node name="Address LineEdit" type="LineEdit" parent="Noray/Noray Address Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "tomfol.io:8890"
+placeholder_text = "noray.example.com:8890"
+
+[node name="OID Row" type="HBoxContainer" parent="Noray"]
+layout_mode = 2
+
+[node name="OID Label" type="Label" parent="Noray/OID Row"]
+layout_mode = 2
+text = "Open ID: "
+
+[node name="OID Value" type="LineEdit" parent="Noray/OID Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "123456789"
+editable = false
+
+[node name="Noray Actions Row" type="HBoxContainer" parent="Noray"]
+layout_mode = 2
+
+[node name="Connect Button" type="Button" parent="Noray/Noray Actions Row"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Disconnect Button" type="Button" parent="Noray/Noray Actions Row"]
+layout_mode = 2
+text = "Disconnect"
+
+[node name="HSeparator" type="HSeparator" parent="Noray"]
+layout_mode = 2
+
+[node name="Connect Host Row" type="HBoxContainer" parent="Noray"]
+layout_mode = 2
+
+[node name="Host Label" type="Label" parent="Noray/Connect Host Row"]
+layout_mode = 2
+text = "Target Host: "
+
+[node name="Host LineEdit" type="LineEdit" parent="Noray/Connect Host Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Host OID"
+
+[node name="Connect Actions Row" type="HBoxContainer" parent="Noray"]
+layout_mode = 2
+
+[node name="Host Button" type="Button" parent="Noray/Connect Actions Row"]
+layout_mode = 2
+text = "Host"
+
+[node name="Join Button" type="Button" parent="Noray/Connect Actions Row"]
+layout_mode = 2
+text = "Join"
+
+[node name="Force Relay Checkbox" type="CheckBox" parent="Noray/Connect Actions Row"]
+layout_mode = 2
+text = "Force Relay"
+
+[node name="Settings" type="VBoxContainer" parent="."]
+layout_mode = 2
+script = ExtResource("1_kqnwt")
+metadata/_tab_index = 2
+
+[node name="Master Volume Row" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+
+[node name="Volume Label" type="Label" parent="Settings/Master Volume Row"]
+layout_mode = 2
+text = "Master Volume:"
+
+[node name="Master Volume Slider" type="HSlider" parent="Settings"]
+layout_mode = 2
+min_value = -30.0
+max_value = 20.0
+
+[node name="Mute Row" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+
+[node name="Mute Label" type="Label" parent="Settings/Mute Row"]
+layout_mode = 2
+text = "Mute:"
+
+[node name="Mute Button" type="CheckButton" parent="Settings/Mute Row"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Settings"]
+layout_mode = 2
+
+[node name="Resolution Row" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+
+[node name="Resolution Label" type="Label" parent="Settings/Resolution Row"]
+layout_mode = 2
+text = "Resolution:"
+
+[node name="Resolution Options" type="OptionButton" parent="Settings/Resolution Row"]
+layout_mode = 2
+selected = 2
+item_count = 3
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600x900"
+popup/item_1/id = 1
+popup/item_2/text = "1280x720"
+popup/item_2/id = 2
+
+[node name="Display Row" type="HBoxContainer" parent="Settings"]
+layout_mode = 2
+
+[node name="Display Label" type="Label" parent="Settings/Display Row"]
+layout_mode = 2
+text = "Display Mode:"
+
+[node name="Display Options" type="OptionButton" parent="Settings/Display Row"]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+popup/item_2/text = "Borderless Fullscreen"
+popup/item_2/id = 2
+
+[node name="LAN Bootstrapper" type="Node" parent="." node_paths=PackedStringArray("title_ui", "connect_ui", "address_input", "port_input")]
+script = ExtResource("1_dy86e")
+title_ui = NodePath("../Title/Label")
+connect_ui = NodePath("..")
+address_input = NodePath("../LAN/Address Row/Address LineEdit")
+port_input = NodePath("../LAN/Address Row/Port LineEdit")
+
+[node name="Noray Bootstrapper" type="Node" parent="." node_paths=PackedStringArray("title_ui", "connect_ui", "noray_address_input", "oid_input", "host_oid_input", "force_relay_check")]
+script = ExtResource("2_fgck5")
+title_ui = NodePath("../Title/Label")
+connect_ui = NodePath("..")
+noray_address_input = NodePath("../Noray/Noray Address Row/Address LineEdit")
+oid_input = NodePath("../Noray/OID Row/OID Value")
+host_oid_input = NodePath("../Noray/Connect Host Row/Host LineEdit")
+force_relay_check = NodePath("../Noray/Connect Actions Row/Force Relay Checkbox")
+
+[node name="Title" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="Title"]
+offset_left = 56.0
+offset_top = 38.0
+offset_right = 565.0
+offset_bottom = 140.0
+theme = SubResource("Theme_36fxp")
+theme_override_colors/font_color = Color(0.831373, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "REGOLITH"
+
+[node name="Label" type="Label" parent="Title/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.761
+anchor_top = 2.135
+anchor_right = 1.0
+anchor_bottom = 3.059
+offset_left = -609.8
+offset_top = -217.77
+offset_right = -541.451
+offset_bottom = 75.982
+theme = SubResource("Theme_36fxp")
+theme_override_colors/font_color = Color(0.831373, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -28
+text = "R
+
+E
+
+D"
+
+[node name="ExitButton" type="Button" parent="Title/Label"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 491.0
+offset_right = 635.0
+offset_bottom = 541.0
+theme_override_fonts/font = ExtResource("4_2pdmx")
+theme_override_font_sizes/font_size = 30
+text = "EXIT"
+
+[node name="PlayersMenu" type="Node" parent="."]
+
+[connection signal="pressed" from="LAN/Actions Row/Host Button" to="LAN Bootstrapper" method="host"]
+[connection signal="pressed" from="LAN/Actions Row/Join Button" to="LAN Bootstrapper" method="join"]
+[connection signal="pressed" from="Noray/Noray Actions Row/Connect Button" to="Noray Bootstrapper" method="connect_to_noray"]
+[connection signal="pressed" from="Noray/Noray Actions Row/Disconnect Button" to="Noray Bootstrapper" method="disconnect_from_noray"]
+[connection signal="pressed" from="Noray/Connect Actions Row/Host Button" to="Noray Bootstrapper" method="host"]
+[connection signal="pressed" from="Noray/Connect Actions Row/Join Button" to="Noray Bootstrapper" method="join"]
+[connection signal="value_changed" from="Settings/Master Volume Slider" to="Settings" method="onMasterVolume_change"]
+[connection signal="toggled" from="Settings/Mute Row/Mute Button" to="Settings" method="onMuteButton_pressed"]
+[connection signal="item_selected" from="Settings/Resolution Row/Resolution Options" to="Settings" method="onResolutionOption_selected"]
+[connection signal="item_selected" from="Settings/Display Row/Display Options" to="Settings" method="onDisplayOption_selected"]
+[connection signal="pressed" from="Title/Label/ExitButton" to="Settings" method="onExitButton_pressed"]

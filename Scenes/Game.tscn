@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://b2nbnsert06me"]
+
+[ext_resource type="PackedScene" uid="uid://cncdbq72u50j3" path="res://Scenes/World/Environment.tscn" id="1_b2bpf"]
+[ext_resource type="Script" uid="uid://dfc6sptiy8y3p" path="res://Scripts/Player/player-spawner.gd" id="1_kldst"]
+[ext_resource type="PackedScene" uid="uid://cngy6hs8ohodj" path="res://Scenes/World/Mars.tscn" id="2_7lihs"]
+[ext_resource type="PackedScene" uid="uid://k3y73rql2u6e" path="res://Scenes/Player/player.tscn" id="2_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://badtpsxn5lago" path="res://Scenes/UI/NetworkPopup.tscn" id="3_7lihs"]
+[ext_resource type="Script" uid="uid://c3eokqjyc0bee" path="res://Scripts/UI/simple-time-display.gd" id="4_fgofq"]
+[ext_resource type="Script" uid="uid://tl6o3ckk0sqi" path="res://Scripts/Global/ProvincesManager.gd" id="5_fgofq"]
+[ext_resource type="Material" uid="uid://dxk3xjogkg6st" path="res://Assets/Materials/Player_PostProcessing_mat.tres" id="6_2irst"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_bf53h"]
+size = Vector2(1280, 720)
+center_offset = Vector3(640, 360, 0)
+
+[node name="Game Scene" type="Node3D"]
+
+[node name="Network" type="Node" parent="."]
+
+[node name="Player Spawner" type="Node" parent="Network" node_paths=PackedStringArray("spawn_root")]
+script = ExtResource("1_kldst")
+player_scene = ExtResource("2_b2bpf")
+spawn_root = NodePath("../../Players")
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Provinces" type="Node" parent="."]
+script = ExtResource("5_fgofq")
+
+[node name="World" type="Node" parent="."]
+
+[node name="Environment" type="Node" parent="World"]
+
+[node name="Camera3D" type="Camera3D" parent="World/Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.396879, 6.61106, 62.4227)
+keep_aspect = 0
+current = true
+
+[node name="Environment" parent="World/Environment" instance=ExtResource("1_b2bpf")]
+
+[node name="Mars" type="Node" parent="World"]
+
+[node name="Mars" parent="World/Mars" instance=ExtResource("2_7lihs")]
+
+[node name="Sun" type="DirectionalLight3D" parent="World/Mars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.3483, 132.206)
+light_energy = 0.4
+light_indirect_energy = 2.0
+light_angular_distance = 9.09
+light_bake_mode = 1
+
+[node name="Post_Processing" type="MeshInstance2D" parent="."]
+texture_filter = 1
+material = ExtResource("6_2irst")
+mesh = SubResource("QuadMesh_bf53h")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Network Popup" parent="UI" instance=ExtResource("3_7lihs")]
+layout_mode = 1
+
+[node name="Time Display" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("4_fgofq")

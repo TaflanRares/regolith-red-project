@@ -1,0 +1,59 @@
+[gd_scene load_steps=13 format=3 uid="uid://cngy6hs8ohodj"]
+
+[ext_resource type="Script" uid="uid://b6cbkr2yq67gt" path="res://Scripts/Provinces/Mapping.gd" id="1_618cd"]
+[ext_resource type="Texture2D" uid="uid://baykp46u7njpq" path="res://Assets/Textures/Mars/worldnormal_map.bmp" id="1_q0dwm"]
+[ext_resource type="Texture2D" uid="uid://b5aly3m4f0tm0" path="res://Assets/Textures/Mars/Mars_terrain_terraformed.bmp" id="1_rwkoe"]
+[ext_resource type="Script" uid="uid://hnohskgvwffc" path="res://Scripts/GDScript/PhobosOrbit.gd" id="2_cb3wh"]
+[ext_resource type="Texture2D" uid="uid://cjnnfw8rvmmit" path="res://Assets/Textures/Phobos_texture.jpg" id="2_g5jx1"]
+[ext_resource type="Material" uid="uid://dpdbe02k6lcm8" path="res://Assets/Materials/Map2DMat.tres" id="3_618cd"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_cb3wh"]
+viewport_path = NodePath("MarsMesh/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q0dwm"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_cb3wh")
+normal_enabled = true
+normal_texture = ExtResource("1_q0dwm")
+
+[sub_resource type="SphereMesh" id="SphereMesh_g5jx1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rwkoe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cb3wh"]
+albedo_texture = ExtResource("2_g5jx1")
+
+[sub_resource type="SphereMesh" id="SphereMesh_q0dwm"]
+radius = 1.0
+height = 2.0
+
+[node name="Mars" type="StaticBody3D"]
+script = ExtResource("1_618cd")
+
+[node name="MarsMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-06, 0, -50, 0, 50, 0, 50, 0, -2.18557e-06, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_q0dwm")
+mesh = SubResource("SphereMesh_g5jx1")
+
+[node name="SubViewport" type="SubViewport" parent="MarsMesh"]
+size = Vector2i(4608, 2304)
+
+[node name="2DSprite" type="Sprite2D" parent="MarsMesh/SubViewport"]
+material = ExtResource("3_618cd")
+position = Vector2(2304, 1152)
+texture = ExtResource("1_rwkoe")
+
+[node name="Provinces" type="Node3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
+shape = SubResource("SphereShape3D_rwkoe")
+
+[node name="PhobosPivot" type="Node3D" parent="."]
+script = ExtResource("2_cb3wh")
+rotation_speed = 10.0
+
+[node name="Phobos" type="MeshInstance3D" parent="PhobosPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 0)
+material_override = SubResource("StandardMaterial3D_cb3wh")
+mesh = SubResource("SphereMesh_q0dwm")

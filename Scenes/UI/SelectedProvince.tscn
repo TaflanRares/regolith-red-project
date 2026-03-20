@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://fsn658nau2l6"]
+
+[ext_resource type="Script" uid="uid://dxhi4n6w8xk6m" path="res://Scripts/UI/ProvinceInfoUI.gd" id="1_0k4u8"]
+[ext_resource type="PackedScene" uid="uid://broywly0b0uys" path="res://Scenes/UI/WinScreen.tscn" id="2_ka40o"]
+
+[node name="SelectedProvince" type="CanvasLayer" node_paths=PackedStringArray("ProvinceTitle_label", "ProvinceType_label", "ProvinceOwner_label", "ProvinceTroops_label")]
+script = ExtResource("1_0k4u8")
+ProvinceTitle_label = NodePath("PanelContainer/VBoxContainer/ProvinceName Box/ProvinceTitle Label")
+ProvinceType_label = NodePath("PanelContainer/VBoxContainer/ProvinceType Box/ProvinceType Label")
+ProvinceOwner_label = NodePath("PanelContainer/VBoxContainer/ProvinceOwner Box/ProvinceOwner Label")
+ProvinceTroops_label = NodePath("PanelContainer/VBoxContainer/ProvinceTroops Box/ProvinceTroops Label")
+
+[node name="WinScreen" parent="." instance=ExtResource("2_ka40o")]
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -125.0
+offset_right = 297.0
+offset_bottom = -17.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="ProvinceName Box" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="PanelContainer/VBoxContainer/ProvinceName Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = ">"
+
+[node name="ProvinceTitle Label" type="Label" parent="PanelContainer/VBoxContainer/ProvinceName Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+
+[node name="ProvinceType Box" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Type" type="Label" parent="PanelContainer/VBoxContainer/ProvinceType Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Type:"
+
+[node name="ProvinceType Label" type="Label" parent="PanelContainer/VBoxContainer/ProvinceType Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="ProvinceOwner Box" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Type" type="Label" parent="PanelContainer/VBoxContainer/ProvinceOwner Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Owner:"
+
+[node name="ProvinceOwner Label" type="Label" parent="PanelContainer/VBoxContainer/ProvinceOwner Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+
+[node name="ProvinceTroops Box" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Troops" type="Label" parent="PanelContainer/VBoxContainer/ProvinceTroops Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Troops:"
+
+[node name="ProvinceTroops Label" type="Label" parent="PanelContainer/VBoxContainer/ProvinceTroops Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30

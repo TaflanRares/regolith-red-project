@@ -1,0 +1,168 @@
+[gd_scene load_steps=14 format=3 uid="uid://k3y73rql2u6e"]
+
+[ext_resource type="Script" uid="uid://lgmqlkuewowp" path="res://Scripts/Player/player.gd" id="1_tksy4"]
+[ext_resource type="Shader" uid="uid://cppqtru1loc3t" path="res://Scripts/Shaders/PostProcessing_Outlines_shader.gdshader" id="2_jlvik"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_qf1b4"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_dkpv5"]
+[ext_resource type="Script" uid="uid://dr0wqty80sjn7" path="res://Scripts/Player/player-input.gd" id="3_g8e4n"]
+[ext_resource type="Script" uid="uid://cs4xu04dnb530" path="res://Scripts/Player/player-ui.gd" id="5_htcer"]
+[ext_resource type="PackedScene" uid="uid://fsn658nau2l6" path="res://Scenes/UI/SelectedProvince.tscn" id="6_dd0ac"]
+[ext_resource type="Material" uid="uid://dxk3xjogkg6st" path="res://Assets/Materials/Player_PostProcessing_mat.tres" id="7_0u5uq"]
+[ext_resource type="PackedScene" uid="uid://c5sigrixohi7w" path="res://Scenes/UI/PauseMenu.tscn" id="8_gk6dx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mtuoh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gk6dx"]
+render_priority = 0
+shader = ExtResource("2_jlvik")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/reverse_depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.6
+shader_parameter/darken_amount = 0.3
+shader_parameter/lighten_amount = 1.5
+shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_jhyir"]
+material = SubResource("ShaderMaterial_gk6dx")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_gk6dx"]
+size = Vector2(1280, 720)
+center_offset = Vector3(640, 360, 0)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("input")]
+visible = false
+script = ExtResource("1_tksy4")
+input = NodePath("Input")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_mtuoh")
+disabled = true
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="CameraRot" type="Node3D" parent="CameraPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraRot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+keep_aspect = 0
+fov = 80.0
+
+[node name="PostProcessing_Outlines" type="MeshInstance3D" parent="CameraPivot/CameraRot/Camera3D"]
+mesh = SubResource("QuadMesh_jhyir")
+
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("CameraPivot", "CameraRot", "PlayerCamera")]
+script = ExtResource("3_g8e4n")
+CameraPivot = NodePath("../CameraPivot")
+CameraRot = NodePath("../CameraPivot/CameraRot")
+PlayerCamera = NodePath("../CameraPivot/CameraRot/Camera3D")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_qf1b4")
+root = NodePath("..")
+state_properties = Array[String]([":position"])
+input_properties = Array[String](["Input:movement"])
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_dkpv5")
+root = NodePath("..")
+properties = Array[String]([":position"])
+
+[node name="PlayerUI" type="CanvasLayer" parent="."]
+script = ExtResource("5_htcer")
+
+[node name="DownRight UI" type="VBoxContainer" parent="PlayerUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -157.0
+offset_top = -165.0
+offset_right = -19.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="Sol Counter" type="Label" parent="PlayerUI/DownRight UI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "SOL:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next Turn Button" type="Button" parent="PlayerUI/DownRight UI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+action_mode = 0
+text = "NEXT
+TURN"
+
+[node name="SelectedProvince" parent="PlayerUI" instance=ExtResource("6_dd0ac")]
+
+[node name="PauseMenu" parent="PlayerUI" instance=ExtResource("8_gk6dx")]
+visible = false
+
+[node name="AttackPanel" type="Panel" parent="PlayerUI"]
+visible = false
+anchors_preset = -1
+anchor_top = 0.733
+anchor_bottom = 0.733
+offset_left = 19.0
+offset_top = -165.76
+offset_right = 247.0
+offset_bottom = -34.76
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="PlayerUI/AttackPanel"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = 192.0
+offset_bottom = 35.0
+theme_override_font_sizes/font_size = 23
+text = "Send your armies"
+
+[node name="AttackButton" type="Button" parent="PlayerUI/AttackPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 70.0
+offset_right = 112.0
+offset_bottom = 122.0
+theme_override_font_sizes/font_size = 31
+text = "Attack"
+
+[node name="TroopSlider" type="HSlider" parent="PlayerUI/AttackPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.101
+anchor_bottom = -0.101
+offset_left = 9.0
+offset_top = 38.231
+offset_right = 216.0
+offset_bottom = 94.231
+max_value = 4.0
+value = 1.0
+
+[node name="TroopCounter" type="Label" parent="PlayerUI/AttackPanel"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 77.0
+offset_right = 205.0
+offset_bottom = 119.0
+theme_override_font_sizes/font_size = 30
+
+[node name="PostProcessing_Pixelation" type="MeshInstance2D" parent="."]
+texture_filter = 1
+material = ExtResource("7_0u5uq")
+position = Vector2(-1344, -88)
+mesh = SubResource("QuadMesh_gk6dx")
+
+[connection signal="onProvince_selected" from="Input" to="." method="onInput_province_selected"]
+[connection signal="pressed" from="PlayerUI/DownRight UI/Next Turn Button" to="Input" method="_on_turn_end_button_pressed"]
+[connection signal="pressed" from="PlayerUI/AttackPanel/AttackButton" to="." method="onAttackButton_pressed"]
+[connection signal="value_changed" from="PlayerUI/AttackPanel/TroopSlider" to="." method="onTroops_chosen"]
